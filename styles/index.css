@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-card-image .card.image-full::before {
+  border-radius: 0.5rem;
+  opacity: 0.25;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  min-width: 100vw;
+  min-height: 100vw;
+}
