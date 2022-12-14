@@ -1,19 +1,27 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
-interface ExtendedNextApiRequest extends NextApiRequest {
-  body: {
-    lat: number;
-    lon: number;
-  };
-}
 type Coords = {
   lat: number;
   lon: number;
 };
+
+interface ExtendedNextApiRequest extends NextApiRequest {
+  body: Coords;
+}
+
+type Weather = {
+  current: {};
+  daily: {}[];
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezone_offset: number;
+};
+
 type Data = {
   city: string | undefined;
-  weather: {} | undefined;
+  weather: Weather | undefined;
 };
 type Error = {
   message: any;
@@ -32,17 +40,16 @@ export default async function handler(
     const res = await fetch(
       `${WEATHER_API_BASE_URL}geo/1.0/reverse?lat=${c.lat}&lon=${c.lon}&appid=${WEATHER_API_KEY}`
     );
-    const city = (await res.json()).map(
+    return (await res.json()).map(
       (cityData: { name: string }): string => cityData.name
     )[0];
-    return city;
   };
 
-  const getCurrentWeather = async (c: Coords): Promise<{}> => {
+  const getCurrentWeather = async (c: Coords) => {
     const res = await fetch(
       `${WEATHER_API_BASE_URL}data/2.5/onecall?lat=${c.lat}&lon=${c.lon}&appid=${WEATHER_API_KEY}&exclude=minutely,hourly,alerts&units=imperial`
     );
-    const weather = (await res.json()) as Promise<{}>;
+    const weather = (await res.json()) as Promise<Weather>;
     return weather;
   };
 
@@ -50,9 +57,9 @@ export default async function handler(
     const weatherData = await Promise.all([
       getCurrentCity(c),
       getCurrentWeather(c),
-    ]).then(([city, weather]: [string, {}]) => ({ city, weather }));
+    ]).then(([city, weather]: [string, Weather]) => ({ city, weather }));
     res.status(200).send({ ...weatherData });
   } catch (error) {
-    res.status(500).send({ message: error });
+    res.status(500).json({ message: error });
   }
 }
