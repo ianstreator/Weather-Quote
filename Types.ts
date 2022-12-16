@@ -9,7 +9,7 @@ export type Weather = {
       0: { description: string; icon: string; id: number; main: string };
     };
   };
-  daily: {}[];
+  daily?: {}[];
 };
 
 export type CityWeatherData = {

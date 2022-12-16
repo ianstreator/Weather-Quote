@@ -6,11 +6,13 @@ const { environment } = nextConfig;
 import Image from "next/image";
 
 import WeekDayCard from "../components/WeekDayCard";
+import CurrentDayCard from "../components/CurrentDayCard";
 
-export default function Home({ url }: ServerSideAssets) {
+export default function Home({ url, quote }: ServerSideAssets) {
   const [cityWeatherData, setCityWeatherData] = useState<CityWeatherData>();
 
-  console.log(url);
+  console.log(url, "undefined?");
+  console.log(quote, "undefined?");
 
   useEffect(() => {
     (async () => {
@@ -33,23 +35,10 @@ export default function Home({ url }: ServerSideAssets) {
         height: "100vh",
       }}
     >
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <figure>
-          <Image
-            src={`/${cityWeatherData.weather.current.weather[0].icon}.png`}
-            alt="icon"
-            width={400}
-            height={400}
-          ></Image>
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
-          </div>
-        </div>
-      </div>
+      <CurrentDayCard
+        weather={cityWeatherData.weather}
+        city={cityWeatherData.city}
+      />
     </main>
   );
 }
@@ -83,10 +72,9 @@ const fetchCityWeatherData = async (coords: Coords) => {
 export async function getServerSideProps() {
   try {
     const res = await fetch(`${environment}api/assets`);
-    const data = (await res.json()) as ServerSideAssets;
-    console.log(data);
+    const { url, quote } = (await res.json()) as ServerSideAssets;
     return {
-      props: { data },
+      props: { url, quote },
     };
   } catch (error) {
     return {

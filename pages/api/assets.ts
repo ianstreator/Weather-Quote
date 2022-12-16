@@ -36,8 +36,8 @@ export default async function handler(
 
     const urlsLen = await redis.llen("urls");
     const quotesLen = await redis.llen("quotes");
-    console.log(urlsLen, quotesLen);
-    console.log(randIndex(urlsLen), randIndex(quotesLen));
+    // console.log(urlsLen, quotesLen);
+    // console.log(randIndex(urlsLen), randIndex(quotesLen));
 
     const url = (await redis.lindex(
       "urls",
@@ -48,7 +48,7 @@ export default async function handler(
       "quotes",
       randIndex(quotesLen)
     )) as ServerSideAssets;
-    console.log(url);
+    // console.log(url);
     res.status(200).json({ url, quote });
   } catch (error) {
     console.log(error);
