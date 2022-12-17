@@ -1,15 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Coords, Weather, CityWeatherData, Error } from "../../Types";
-import Cors from "cors";
 
-const cors = Cors({
-  origin: "*",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-});
-// https://a9a0-2601-246-5881-630-9d84-7166-3622-415d.ngrok.io/
 interface ExtendedNextApiRequest extends NextApiRequest {
   body: Coords;
 }

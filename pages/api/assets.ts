@@ -2,12 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Redis } from "@upstash/redis";
 import { ServerSideAssets, Quote, Error, Unsplash } from "../../Types";
-import Cors from "cors";
-
-const cors = Cors({
-  origin: "*",
-});
-
 // const BASE_API_URL = "https://api.unsplash.com/";
 // const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 const redis = Redis.fromEnv();
