@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+const createTransformer = require("tailwind-group-variant");
+
 module.exports = {
- content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: {
+    files: [
+      "./pages/**/*.{js,ts,jsx,tsx}",
+      "./components/**/*.{js,ts,jsx,tsx}",
+    ],
+    transform: createTransformer(),
+  },
   theme: {
     extend: {},
     screens: {

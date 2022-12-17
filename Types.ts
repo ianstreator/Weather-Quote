@@ -5,6 +5,7 @@ export type Weather = {
     sunset: number;
     wind_deg: number;
     wind_speed: number;
+    feels_like: number;
     weather: {
       0: { description: string; icon: string; id: number; main: string };
     };
@@ -36,7 +37,12 @@ export type Unsplash = {
   };
 };
 
+export type Quote = {
+  quote: string;
+  author: string;
+};
+
 export type ServerSideAssets = {
-  url: string;
-  quote: { quote: string; author: string };
+  url?: string;
+  quote: Quote;
 };
