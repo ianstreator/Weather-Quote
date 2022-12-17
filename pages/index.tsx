@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import { CityWeatherData, Coords, ServerSideAssets } from "../Types";
 import { nextConfig } from "../next.config";
 const { environment } = nextConfig;
+import createTransformer from "tailwind-group-variant";
+const expandVariant = createTransformer();
 
 import Image from "next/image";
 
 import WeekDayCard from "../components/WeekDayCard";
 import CurrentDayCard from "../components/CurrentDayCard";
+import QuoteCard from "../components/QuoteCard";
+import CardTrack from "../components/CardTrack";
 
 export default function Home({ url, quote }: ServerSideAssets) {
   const [cityWeatherData, setCityWeatherData] = useState<CityWeatherData>();
-
-  console.log(url, "undefined?");
-  console.log(quote, "undefined?");
 
   useEffect(() => {
     (async () => {
@@ -22,7 +23,14 @@ export default function Home({ url, quote }: ServerSideAssets) {
     })();
   }, []);
 
-  if (!cityWeatherData) return <div>Checking weather...</div>;
+  if (!cityWeatherData)
+    return (
+      <div>
+        <p>Checking weather...</p>
+        <p>Setting scene...</p>
+        <p>Finding quote...</p>
+      </div>
+    );
 
   return (
     <main
@@ -31,14 +39,15 @@ export default function Home({ url, quote }: ServerSideAssets) {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        width: "100vw",
-        height: "100vh",
       }}
+      className={expandVariant("w-screen, h-screen flex-col -z-50 absolute")}
     >
+      <QuoteCard quote={quote} />
       <CurrentDayCard
         weather={cityWeatherData.weather}
         city={cityWeatherData.city}
       />
+      <div className="w-screen h-1/3 bg-gradient-to-b from-black absolute top-0 -z-10"></div>
     </main>
   );
 }
@@ -61,8 +70,8 @@ const fetchCityWeatherData = async (coords: Coords) => {
     body: JSON.stringify(coords),
   };
   try {
-    const res = await fetch(`${environment}api/weather`, options);
-    const data = (await res.json()) as Promise<CityWeatherData>;
+    const res = await fetch(`${window.location.href}api/weather`, options);
+    const data = (await res.json()) as CityWeatherData;
     return data;
   } catch (error) {
     throw error;
