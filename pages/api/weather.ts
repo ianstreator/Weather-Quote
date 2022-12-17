@@ -1,7 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Coords, Weather, CityWeatherData, Error } from "../../Types";
+import Cors from "cors";
 
+const cors = Cors({
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+});
+// https://a9a0-2601-246-5881-630-9d84-7166-3622-415d.ngrok.io/
 interface ExtendedNextApiRequest extends NextApiRequest {
   body: Coords;
 }
@@ -18,13 +26,12 @@ export default async function handler(
       `${WEATHER_API_BASE_URL}geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
     );
     const [{ name: city }] = (await res.json()) as { name: string }[];
-
     return city;
   };
 
   const getCurrentWeather = async () => {
     const res = await fetch(
-      `${WEATHER_API_BASE_URL}data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&exclude=minutely,hourly,alerts&units=imperial`
+      `${WEATHER_API_BASE_URL}data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=imperial`
     );
     const weather = (await res.json()) as Promise<Weather>;
     return weather;
