@@ -39,7 +39,7 @@ function CurrentDayCard({ weather, city }: CityWeatherData) {
     >
       <div className="w-1/2">
         <h2 className="text-center text-2xl">{city}</h2>
-        <div className="flex-col h-fit items-center w-full bg-black bg-opacity-25 h-1/2 p-2">
+        <div className="flex-col h-fit items-center w-full bg-black bg-opacity-25 p-2">
           <div className="w-10/12 flex flex-row justify-between text-sm mx-auto">
             <p>H: {highTemp}</p>
             <p className="opacity-70">L: {lowTemp}</p>
