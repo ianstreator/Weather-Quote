@@ -14,7 +14,6 @@ import CardTrack from "../components/CardTrack";
 
 export default function Home({ url, quote }: ServerSideAssets) {
   const [cityWeatherData, setCityWeatherData] = useState<CityWeatherData>();
-
   useEffect(() => {
     (async () => {
       const coords = await getCoordinates();
@@ -40,14 +39,13 @@ export default function Home({ url, quote }: ServerSideAssets) {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-      className={expandVariant("w-screen, h-screen flex-col -z-50 absolute")}
+      className={expandVariant("w-screen h-screen flex-col")}
     >
       <QuoteCard quote={quote} />
       <CurrentDayCard
         weather={cityWeatherData.weather}
         city={cityWeatherData.city}
       />
-      <div className="w-screen h-1/3 bg-gradient-to-b from-black absolute top-0 -z-10"></div>
     </main>
   );
 }
