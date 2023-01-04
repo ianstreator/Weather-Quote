@@ -10,6 +10,8 @@ export type Weather = {
       0: { description: string; icon: string; id: number; main: string };
     };
   };
+  minutely: { dt: number; precipitation: number }[];
+  hourly: { temp: number }[];
   daily?: {}[];
 };
 
@@ -33,7 +35,7 @@ export type Unsplash = {
     full: string;
     regular: string;
     small: string;
-    thumn: string;
+    thumb: string;
   };
 };
 
@@ -46,3 +48,5 @@ export type ServerSideAssets = {
   url?: string;
   quote: Quote;
 };
+
+export type RedisURL = [uid: string, urls: { thumb: string; full: string }];
