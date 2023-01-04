@@ -30,7 +30,7 @@ function RainGraph({ data: { minutely } }: { data: Weather }) {
 
   return (
     <div className="w-10/12 mx-auto my-2">
-      <h1 className="text-sm text-start">Next hour precipitation</h1>
+      <h1 className="text-sm text-start">1/hr precipitation</h1>
       <canvas
         id="canvas"
         className="w-full bg-gradient-to-tr from-cyan-900/10 to-cyan-900/30"
