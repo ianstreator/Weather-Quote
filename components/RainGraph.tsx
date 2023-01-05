@@ -1,7 +1,14 @@
 import React, { useEffect } from "react";
 import { Weather } from "../Types";
+import useTime from "../hooks/useTime";
 
 function RainGraph({ data: { minutely } }: { data: Weather }) {
+  const firstMinute = minutely[0].dt;
+  const lastMinute = minutely[minutely.length - 1].dt;
+
+  const startOfHour = useTime(firstMinute);
+  const endOfHour = useTime(lastMinute);
+
   useEffect(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
@@ -30,7 +37,10 @@ function RainGraph({ data: { minutely } }: { data: Weather }) {
 
   return (
     <div className="w-10/12 mx-auto my-2">
-      <h1 className="text-sm text-start">1/hr precipitation</h1>
+      <h1 className="text-sm text-start font-bold">Precipitation</h1>
+      <p className="text-xs text-start">
+        {startOfHour} - {endOfHour}
+      </p>
       <canvas
         id="canvas"
         className="w-full bg-gradient-to-tr from-cyan-900/10 to-cyan-900/30"
