@@ -1,5 +1,5 @@
 import React from "react";
-import { Weather, WeekdayData } from "../Types";
+import { WeekdayData } from "../Types";
 
 import WeekDayCard from "./WeekDayCard";
 
@@ -10,7 +10,7 @@ function CardTrack({ data }: { data: WeekdayData[] }) {
       {data.map((day, i) => {
         console.log(i);
         if (i > 5) return;
-        return <WeekDayCard data={day} />;
+        return <WeekDayCard key={i} data={day} />;
       })}
     </div>
   );

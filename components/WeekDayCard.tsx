@@ -21,8 +21,6 @@ const iconSize = 100;
 function WeekDayCard({ data }: { data: WeekdayData }) {
   const [cardView, setCardView] = useState<React.ReactNode>();
 
-  console.log(data);
-
   const dayNum = new Date(data.dt * 1000).getDay();
   const weekDay = currentDay[dayNum];
   const front = (
@@ -54,7 +52,7 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
 
   useEffect(() => {
     setCardView(front);
-  }, []);
+  }, [front]);
 
   return (
     <div className="card max-w-sm w-36 h-52 p-2 text-center flex flex-col items-center justify-around bg-base-100/80 backdrop-blur-sm">

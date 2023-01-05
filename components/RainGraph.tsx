@@ -33,7 +33,7 @@ function RainGraph({ data: { minutely } }: { data: Weather }) {
     ctx?.closePath();
     ctx?.fill();
     ctx?.stroke();
-  }, []);
+  }, [minutely]);
 
   return (
     <div className="w-10/12 mx-auto my-2">
