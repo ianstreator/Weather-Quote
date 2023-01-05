@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import { CityWeatherData, Coords, ServerSideAssets } from "../Types";
 import { nextConfig } from "../next.config";
 const { environment } = nextConfig;
-import createTransformer from "tailwind-group-variant";
-const expandVariant = createTransformer();
-
-import Image from "next/image";
 
 import WeekDayCard from "../components/WeekDayCard";
 import CurrentDayCard from "../components/CurrentDayCard";
@@ -21,7 +17,7 @@ export default function Home({ url, quote }: ServerSideAssets) {
       setCityWeatherData(cityWeatherData);
     })();
   }, []);
-
+  console.log(cityWeatherData?.weather);
   if (!cityWeatherData)
     return (
       <div>
@@ -39,13 +35,21 @@ export default function Home({ url, quote }: ServerSideAssets) {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-      className={expandVariant("w-screen h-screen flex-col")}
+      className="w-screen h-screen"
     >
-      <QuoteCard quote={quote} />
-      <CurrentDayCard
-        weather={cityWeatherData.weather}
-        city={cityWeatherData.city}
-      />
+      <div className="w-screen h-screen mx-auto flex flex-col md:flex-wrap-reverse md:p-4 md:w-10/12">
+        <div className="flex flex-col md:flex-row-reverse md:w-full md:justify-between">
+          <QuoteCard quote={quote} />
+          <CurrentDayCard
+            weather={cityWeatherData.weather}
+            city={cityWeatherData.city}
+          />
+        </div>
+
+        {/* <div className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"> */}
+        <CardTrack data={cityWeatherData.weather.daily} />
+        {/* </div> */}
+      </div>
     </main>
   );
 }

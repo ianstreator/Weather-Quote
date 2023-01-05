@@ -1,13 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Redis } from "@upstash/redis";
-import {
-  ServerSideAssets,
-  Quote,
-  Error,
-  Unsplash,
-  RedisURL,
-} from "../../Types";
+import { ServerSideAssets, Quote, Error, URLs } from "../../Types";
 const BASE_API_URL = "https://api.unsplash.com/";
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 const redis = Redis.fromEnv();
@@ -39,7 +33,7 @@ export default async function handler(
     // await redis.rename("quotes2", "quotes");
     // const randIndex = (length: number) => Math.floor(Math.random() * length);
 
-    const randBackground = (await redis.srandmember("urls")) as RedisURL;
+    const randBackground = (await redis.srandmember("urls")) as URLs;
     const url = randBackground[1].full;
     const quote = (await redis.srandmember("quotes")) as Quote;
 

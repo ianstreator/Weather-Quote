@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html data-theme="business">
       <Head />
-      <body>
+      <body className="bg-zinc-900">
         <Main />
         <NextScript />
       </body>

@@ -1,3 +1,20 @@
+export type WeekdayData = {
+  humidity: number;
+  sunrise: number;
+  sunset: number;
+  dt:number;
+  temp: {
+    day: number;
+    min: number;
+    max: number;
+  };
+  weather: {
+    0: { description: string; icon: string; id: number; main: string };
+  };
+  wind_deg: number;
+  wind_speed: number;
+};
+
 export type Weather = {
   current: {
     temp: number;
@@ -12,7 +29,7 @@ export type Weather = {
   };
   minutely: { dt: number; precipitation: number }[];
   hourly: { temp: number }[];
-  daily?: {}[];
+  daily: WeekdayData[];
 };
 
 export type CityWeatherData = {
@@ -49,4 +66,4 @@ export type ServerSideAssets = {
   quote: Quote;
 };
 
-export type RedisURL = [uid: string, urls: { thumb: string; full: string }];
+export type URLs = [uid: string, urls: { thumb: string; full: string }];
