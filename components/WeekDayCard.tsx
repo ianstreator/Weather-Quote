@@ -1,4 +1,5 @@
-import React, { JSXElementConstructor, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import clsx from "clsx";
 import Image from "next/image";
 import { WeekdayData } from "../Types";
 
@@ -19,21 +20,27 @@ const currentDay: WeekMap = {
 const iconSize = 100;
 
 function WeekDayCard({ data }: { data: WeekdayData }) {
-  const [cardView, setCardView] = useState<React.ReactNode>();
+  const [cardFlipped, setCardFlipped] = useState<boolean>(false);
 
   const dayNum = new Date(data.dt * 1000).getDay();
   const weekDay = currentDay[dayNum];
+
+  const turnArrow = (
+    <figure className="arrow">
+      <Image
+        src="/turn-arrow.svg"
+        alt="weather-icon"
+        width={iconSize / 4}
+        height={iconSize / 4}
+      />
+    </figure>
+  );
+
   const front = (
-    <>
-      <figure className="absolute bottom-0 right-0">
-        <Image
-          src="/turn-arrow.svg"
-          alt="weather-icon"
-          width={iconSize / 4}
-          height={iconSize / 4}
-        />
-      </figure>
-      <figure className="mx-auto">
+    <div className="card front">
+      <h1>{weekDay}</h1>
+
+      <figure className="">
         <Image
           src={`/${data.weather[0].icon}.svg`}
           alt="weather-icon"
@@ -41,23 +48,30 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
           height={iconSize}
         />
       </figure>
-
-      <p className="w-24 text-xl">{data.weather[0].description}</p>
-    </>
+      <p className="">{data.weather[0].description}</p>
+      {turnArrow}
+    </div>
   );
 
-  // const back = (
+  const back = (
+    <div className="card back">
+      <h1>{weekDay}</h1>
 
-  // )
+      <p>{(data.pop * 100).toFixed(0)}% chance of precipitation</p>
+      {data.snow && <p>up to {Math.ceil(data.snow!).toFixed(2)}mm of snow</p>}
+      {data.rain && <p>up to {Math.ceil(data.rain!).toFixed(2)}mm of rain</p>}
 
-  useEffect(() => {
-    setCardView(front);
-  }, [front]);
+      {turnArrow}
+    </div>
+  );
 
   return (
-    <div className="card max-w-sm w-36 h-52 p-2 text-center flex flex-col items-center justify-around bg-base-100/80 backdrop-blur-sm">
-      <h1 className="text-xl font-bold w-36">{weekDay}</h1>
-      {cardView}
+    <div
+      onClick={() => setCardFlipped(!cardFlipped)}
+      className={clsx("weekday-card", cardFlipped && "flipped")}
+    >
+      {front}
+      {back}
     </div>
   );
 }
