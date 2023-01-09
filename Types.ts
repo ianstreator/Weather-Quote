@@ -2,7 +2,7 @@ export type WeekdayData = {
   humidity: number;
   sunrise: number;
   sunset: number;
-  dt:number;
+  dt: number;
   temp: {
     day: number;
     min: number;
@@ -11,6 +11,9 @@ export type WeekdayData = {
   weather: {
     0: { description: string; icon: string; id: number; main: string };
   };
+  pop: number;
+  snow?: number;
+  rain?: number;
   wind_deg: number;
   wind_speed: number;
 };
@@ -23,12 +26,13 @@ export type Weather = {
     wind_deg: number;
     wind_speed: number;
     feels_like: number;
+    dt: number;
     weather: {
       0: { description: string; icon: string; id: number; main: string };
     };
   };
   minutely: { dt: number; precipitation: number }[];
-  hourly: { temp: number }[];
+  hourly: { temp: number; pop: number; dt: number }[];
   daily: WeekdayData[];
 };
 
