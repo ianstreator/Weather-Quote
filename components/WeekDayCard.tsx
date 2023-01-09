@@ -2,28 +2,19 @@ import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import { WeekdayData } from "../Types";
-
-type WeekMap = {
-  [int: number]: string;
-};
-
-const currentDay: WeekMap = {
-  0: "Monday",
-  1: "Tuesday",
-  2: "Wednesday",
-  3: "Thursday",
-  4: "Friday",
-  5: "Saturday",
-  6: "Sunday",
-};
+import useGetDay from "../hooks/useGetDay";
+import useInches from "../hooks/useInches";
+import useTime from "../hooks/useTime";
 
 const iconSize = 100;
 
 function WeekDayCard({ data }: { data: WeekdayData }) {
   const [cardFlipped, setCardFlipped] = useState<boolean>(false);
 
-  const dayNum = new Date(data.dt * 1000).getDay();
-  const weekDay = currentDay[dayNum];
+  const weekDay = useGetDay(data.dt);
+
+  const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(data.sunrise);
+  const { timeString: setTime, timeAbbr: setAbbr } = useTime(data.sunset);
 
   const turnArrow = (
     <figure className="arrow">
@@ -48,18 +39,77 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
           height={iconSize}
         />
       </figure>
-      <p className="">{data.weather[0].description}</p>
+      <p className="max-w-min">{data.weather[0].description}</p>
       {turnArrow}
     </div>
   );
 
   const back = (
-    <div className="card back">
-      <h1>{weekDay}</h1>
+    <div className="card back text-sm">
+      <fieldset>
+        <legend>Tempature</legend>
+        <div className="w-11/12 flex justify-between items-center mx-auto">
+          <p>{`${Math.round(data.temp.max)}°`}</p>
+          <Image
+            src={"/temp-diff.svg"}
+            alt="temp-diff"
+            width={iconSize / 3}
+            height={iconSize / 3}
+          ></Image>
+          <p className="text-white/75">{`${Math.round(data.temp.min)}°`}</p>
+        </div>
+      </fieldset>
 
-      <p>{(data.pop * 100).toFixed(0)}% chance of precipitation</p>
-      {data.snow && <p>up to {Math.ceil(data.snow!).toFixed(2)}mm of snow</p>}
-      {data.rain && <p>up to {Math.ceil(data.rain!).toFixed(2)}mm of rain</p>}
+      <fieldset>
+        <legend>Precipitation <span className="text-xs font-light">{(data.pop * 100).toFixed(0)}%</span> </legend>
+        {data.snow && (
+          <div className="flex items-center">
+            <Image
+              src={"/snow-flake.svg"}
+              alt="snow"
+              width={iconSize / 3}
+              height={iconSize / 3}
+            ></Image>
+
+            <p>{useInches(data.snow)}</p>
+          </div>
+        )}
+
+        {data.rain && (
+          <div className="flex items-center">
+            <Image
+              src={"/rain-drop.svg"}
+              alt="rain"
+              width={iconSize / 3}
+              height={iconSize / 3}
+            ></Image>
+
+            <p>{useInches(data.rain)}</p>
+          </div>
+        )}
+      </fieldset>
+      <fieldset>
+        <legend>Sun</legend>
+        <div className="relative w-11/12 flex flex-row justify-between mx-auto">
+          <div className="absolute top-0 left-0 text-start">
+            <p> {riseTime}</p>
+            <p className="text-xs"> {riseAbbr}</p>
+          </div>
+
+          <Image
+            src={"/sun-rise-set.svg"}
+            width={iconSize * 0.5}
+            height={iconSize * 0.5}
+            alt="sun-rise-set"
+            className="mt-auto mx-auto"
+          ></Image>
+
+          <div className="absolute bottom-0 right-0 text-end">
+            <p className="text-xs"> {setAbbr}</p>
+            <p> {setTime}</p>
+          </div>
+        </div>
+      </fieldset>
 
       {turnArrow}
     </div>
