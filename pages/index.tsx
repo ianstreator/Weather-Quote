@@ -3,7 +3,6 @@ import { CityWeatherData, Coords, ServerSideAssets } from "../Types";
 import { nextConfig } from "../next.config";
 const { environment } = nextConfig;
 
-import WeekDayCard from "../components/WeekDayCard";
 import CurrentDayCard from "../components/CurrentDayCard";
 import QuoteCard from "../components/QuoteCard";
 import CardTrack from "../components/CardTrack";
@@ -17,7 +16,6 @@ export default function Home({ url, quote }: ServerSideAssets) {
       setCityWeatherData(cityWeatherData);
     })();
   }, []);
-  console.log(cityWeatherData?.weather);
   if (!cityWeatherData)
     return (
       <div>
@@ -45,10 +43,7 @@ export default function Home({ url, quote }: ServerSideAssets) {
             city={cityWeatherData.city}
           />
         </div>
-
-        {/* <div className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"> */}
         <CardTrack data={cityWeatherData.weather.daily} />
-        {/* </div> */}
       </div>
     </main>
   );
