@@ -13,6 +13,9 @@ export default async function handler(
   { body: { lat, lon } }: ExtendedNextApiRequest,
   res: NextApiResponse<CityWeatherData | Error>
 ) {
+  // const lonTest = 141.879;
+  // const latTest = -12.629;
+
   const getCurrentCity = async () => {
     const res = await fetch(
       `${WEATHER_API_BASE_URL}geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
