@@ -12,6 +12,8 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
   const [cardFlipped, setCardFlipped] = useState<boolean>(false);
 
   const weekDay = useGetDay(data.dt);
+  const rainInches = useInches(data.rain);
+  const snowInches = useInches(data.snow);
 
   const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(data.sunrise);
   const { timeString: setTime, timeAbbr: setAbbr } = useTime(data.sunset);
@@ -61,8 +63,13 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
       </fieldset>
 
       <fieldset>
-        <legend>Precipitation <span className="text-xs font-light">{(data.pop * 100).toFixed(0)}%</span> </legend>
-        {data.snow && (
+        <legend>
+          Precipitation{" "}
+          <span className="text-xs font-light">
+            {(data.pop * 100).toFixed(0)}%
+          </span>{" "}
+        </legend>
+        {snowInches && (
           <div className="flex items-center">
             <Image
               src={"/snow-flake.svg"}
@@ -71,11 +78,11 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
               height={iconSize / 3}
             ></Image>
 
-            <p>{useInches(data.snow)}</p>
+            <p>{snowInches}</p>
           </div>
         )}
 
-        {data.rain && (
+        {rainInches && (
           <div className="flex items-center">
             <Image
               src={"/rain-drop.svg"}
@@ -84,7 +91,7 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
               height={iconSize / 3}
             ></Image>
 
-            <p>{useInches(data.rain)}</p>
+            <p>{rainInches}</p>
           </div>
         )}
       </fieldset>
