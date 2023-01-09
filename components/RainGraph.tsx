@@ -4,8 +4,6 @@ import useTime from "../hooks/useTime";
 import useInches from "../hooks/useInches";
 
 function RainGraph({ data: { hourly } }: { data: Weather }) {
-  if (!hourly) return null;
-
   const first = hourly[0].dt;
   const last = hourly[23].dt;
 
