@@ -3,6 +3,12 @@ import useTime from "../hooks/useTime";
 import { Weather } from "../Types";
 
 function RainGraph({ data: { hourly } }: { data: Weather }) {
+  const nextDayIndex = hourly.findIndex(({ dt }, i) => {
+    const { hour, timeAbbr } = useTime(dt);
+    if (timeAbbr === "AM" && hour === 12) {
+      return i;
+    }
+  });
   useEffect(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -11,12 +17,6 @@ function RainGraph({ data: { hourly } }: { data: Weather }) {
     const height = (canvas.height = 200);
     const originY = height;
 
-    const nextDayIndex = hourly.findIndex(({ dt }, i) => {
-      const { hour, timeAbbr } = useTime(dt);
-      if (timeAbbr === "AM" && hour === 12) {
-        return i;
-      }
-    });
     const graphHour = width / 24;
     let graphTime = 0;
     ctx.lineWidth = 5;
