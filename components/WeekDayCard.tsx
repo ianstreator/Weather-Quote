@@ -12,8 +12,8 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
   const [cardFlipped, setCardFlipped] = useState<boolean>(false);
 
   const weekDay = useGetDay(data.dt);
-  const rainInches = useInches(data.rain);
-  const snowInches = useInches(data.snow);
+  const rain = useInches(data.rain);
+  const snow = useInches(data.snow);
 
   const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(data.sunrise);
   const { timeString: setTime, timeAbbr: setAbbr } = useTime(data.sunset);
@@ -32,16 +32,17 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
   const front = (
     <div className="card front">
       <h1>{weekDay}</h1>
+      <h1>{`${Math.round(data.temp.day)}°`}</h1>
 
       <figure className="">
         <Image
           src={`/${data.weather[0].icon}.svg`}
           alt="weather-icon"
-          width={iconSize}
-          height={iconSize}
+          width={iconSize / 1.5}
+          height={iconSize / 1.5}
         />
       </figure>
-      <p className="max-w-min">{data.weather[0].description}</p>
+      <p>{data.weather[0].description}</p>
       {turnArrow}
     </div>
   );
@@ -65,11 +66,11 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
       <fieldset>
         <legend>
           Precipitation{" "}
-          <span className="text-xs font-light">
+          <span className="text-xs font-thin">
             {(data.pop * 100).toFixed(0)}%
-          </span>{" "}
+          </span>
         </legend>
-        {snowInches && (
+        {snow && (
           <div className="flex items-center">
             <Image
               src={"/snow-flake.svg"}
@@ -78,11 +79,11 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
               height={iconSize / 3}
             ></Image>
 
-            <p>{snowInches}</p>
+            <p>{snow}</p>
           </div>
         )}
 
-        {rainInches && (
+        {rain && (
           <div className="flex items-center">
             <Image
               src={"/rain-drop.svg"}
@@ -91,7 +92,7 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
               height={iconSize / 3}
             ></Image>
 
-            <p>{rainInches}</p>
+            <p>{rain}</p>
           </div>
         )}
       </fieldset>
@@ -105,8 +106,8 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
 
           <Image
             src={"/sun-rise-set.svg"}
-            width={iconSize * 0.5}
-            height={iconSize * 0.5}
+            width={iconSize / 2}
+            height={iconSize / 2}
             alt="sun-rise-set"
             className="mt-auto mx-auto"
           ></Image>
@@ -123,12 +124,14 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
   );
 
   return (
-    <div
-      onClick={() => setCardFlipped(!cardFlipped)}
-      className={clsx("weekday-card", cardFlipped && "flipped")}
-    >
-      {front}
-      {back}
+    <div className="carousel-item">
+      <div
+        onClick={() => setCardFlipped(!cardFlipped)}
+        className={clsx("weekday-card", cardFlipped && "flipped")}
+      >
+        {front}
+        {back}
+      </div>
     </div>
   );
 }
