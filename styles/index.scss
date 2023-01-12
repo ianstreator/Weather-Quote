@@ -32,14 +32,15 @@ body {
   backdrop-filter: blur(4px);
   border-radius: 0.5rem;
   overflow: hidden;
-  transition: 500ms;
   cursor: pointer;
   user-select: none;
   position: relative;
+  transition: 750ms;
   .arrow {
     position: absolute;
     bottom: 0;
   }
+
   .card {
     position: absolute;
     width: 100%;
@@ -63,6 +64,8 @@ body {
       }
       p {
         font-size: small;
+        min-width: 75%;
+        max-width: 75%;
         &::first-letter {
           text-transform: capitalize;
         }
@@ -80,6 +83,7 @@ body {
         border-bottom: 0;
         border-right: 0;
         width: 100%;
+        min-height: 53.33px;
         display: flex;
         justify-content: center;
         legend {
