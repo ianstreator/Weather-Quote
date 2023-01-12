@@ -11,7 +11,7 @@ function useTime(epoch: number) {
   if (minute < 10) minute = `0${minute}`;
 
   const timeString = `${hour}:${minute}`;
-  return { timeString, timeAbbr };
+  return { timeString, timeAbbr, hour, minute };
 }
 
 export default useTime;
