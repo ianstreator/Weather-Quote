@@ -35,7 +35,7 @@ export default function Home({ url, quote }: ServerSideAssets) {
       }}
       className="w-screen h-screen"
     >
-      <div className="w-screen h-screen mx-auto flex flex-col md:flex-wrap-reverse md:p-4 md:w-10/12">
+      <div className="w-screen h-screen mx-auto flex flex-col md:p-28 md:px-20 md:w-10/12 md:scale-125">
         <div className="flex flex-col md:flex-row-reverse md:w-full md:justify-between">
           <QuoteCard quote={quote} />
           <CurrentDayCard
