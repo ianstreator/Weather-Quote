@@ -31,7 +31,7 @@ export type Weather = {
       0: { description: string; icon: string; id: number; main: string };
     };
   };
-  minutely: { dt: number; precipitation: number }[];
+  minutely?: { dt: number; precipitation: number }[];
   hourly: { pop: number; dt: number }[];
   daily: WeekdayData[];
 };
