@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <div className="footer-container max-w-xs m-auto mt-0 md:max-w-full md:flex-col md:justify-between md:items-start md:pl-0">
+    <div className="footer-container max-w-xs mx-auto md:max-w-full md:justify-start md:items-start md:pl-0">
       <a className="footer-card md:m-1" href="https://github.com/ianstreator" target="_blank" rel="noreferrer">
         <Image
           src={"/github-icon.svg"}
