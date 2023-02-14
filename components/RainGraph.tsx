@@ -50,7 +50,7 @@ function RainGraph({ data: { hourly } }: { data: Weather }) {
   return (
     <div className="w-10/12 mx-auto my-2">
       <h1 className="text-xs text-start font-bold flex items-center bg-black/25 justify-center rounded-lg">
-        24Hr chance of
+        24hr chance of
         <Image src={"/rain.svg"} alt="snow" width={12} height={12}></Image>
         <Image src={"/snow.svg"} alt="snow" width={12} height={12}></Image>
       </h1>
