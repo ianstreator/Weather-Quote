@@ -1,6 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Coords, Weather, CityWeatherData, Error } from "../../Types";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
 
 interface ExtendedNextApiRequest extends NextApiRequest {
   body: Coords;
@@ -13,8 +16,6 @@ export default async function handler(
   { body: { lat, lon } }: ExtendedNextApiRequest,
   res: NextApiResponse<CityWeatherData | Error>
 ) {
-  // const lonTest = 141.879;
-  // const latTest = -12.629;
 
   const getCurrentCity = async () => {
     const res = await fetch(
@@ -32,16 +33,26 @@ export default async function handler(
     return weather;
   };
 
-  try {
-    const cityWeatherData = (await Promise.all([
-      getCurrentCity(),
-      getCurrentWeather(),
-    ]).then(([city, weather]) => ({
-      city,
-      weather,
-    }))) as CityWeatherData;
-    res.status(200).send({ ...cityWeatherData });
-  } catch (error) {
-    res.status(500).json({ message: error });
+  const city = await getCurrentCity();
+  let weather = (await redis.hgetall(city)) as Weather;
+
+  if (weather) {
+    res.status(200).send({ city, weather });
+  } else {
+    try {
+      const weatherData = await getCurrentWeather();
+      weather = {
+        current: weatherData.current,
+        hourly: weatherData.hourly.splice(0, 23),
+        daily: weatherData.daily.splice(1, weatherData.daily.length - 1),
+      };
+
+      await redis.hset(city, weather);
+      await redis.expire(city, 120);
+
+      res.status(200).send({ city, weather });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
   }
 }
