@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+.scrollbar {
+  padding-bottom: 1rem;
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: hsla(0, 0%, 100%, 0.1);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: hsl(0, 0%, 100%);
+  }
+}
+
 .custom-card-image .card.image-full::before {
   border-radius: 0.5rem;
   opacity: 0.25;
@@ -108,5 +129,25 @@ body {
         transform: rotateY(-180deg);
       }
     }
+  }
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+  width: 100%;
+  .footer-card {
+    background-color: hsla(0, 0%, 16%, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 40px;
+    max-height: 40px;
   }
 }
