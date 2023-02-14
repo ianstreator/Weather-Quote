@@ -6,6 +6,7 @@ const { environment } = nextConfig;
 import CurrentDayCard from "../components/CurrentDayCard";
 import QuoteCard from "../components/QuoteCard";
 import CardTrack from "../components/CardTrack";
+import Footer from "../components/Footer";
 
 export default function Home({ url, quote }: ServerSideAssets) {
   const [cityWeatherData, setCityWeatherData] = useState<CityWeatherData>();
@@ -44,6 +45,7 @@ export default function Home({ url, quote }: ServerSideAssets) {
           />
         </div>
         <CardTrack data={cityWeatherData.weather.daily} />
+        <Footer />
       </div>
     </main>
   );
