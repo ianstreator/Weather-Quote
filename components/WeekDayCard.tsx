@@ -50,7 +50,7 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
   const back = (
     <div className="card back text-sm">
       <fieldset>
-        <legend>Tempature</legend>
+        <legend>Temperature</legend>
         <div className="w-11/12 flex justify-between items-center mx-auto">
           <p>{`${Math.round(data.temp.max)}°`}</p>
           <Image
@@ -70,29 +70,29 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
             {(data.pop * 100).toFixed(0)}%
           </span>
         </legend>
-        {snow && (
-          <div className="flex items-center">
-            <Image
-              src={"/snow-flake.svg"}
-              alt="snow"
-              width={iconSize / 3}
-              height={iconSize / 3}
-            ></Image>
-
-            <p>{snow}</p>
-          </div>
-        )}
 
         {rain && (
-          <div className="flex items-center">
+          <div className="flex items-center m-auto ">
             <Image
-              src={"/rain-drop.svg"}
+              src={"/rain.svg"}
               alt="rain"
-              width={iconSize / 3}
-              height={iconSize / 3}
+              width={iconSize / 6}
+              height={iconSize / 6}
             ></Image>
 
             <p>{rain}</p>
+          </div>
+        )}
+        {snow && (
+          <div className="flex items-center m-auto ">
+            <Image
+              src={"/snow.svg"}
+              alt="snow"
+              width={iconSize / 6}
+              height={iconSize / 6}
+            ></Image>
+
+            <p>{snow}</p>
           </div>
         )}
       </fieldset>
