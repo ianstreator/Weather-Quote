@@ -1,4 +1,32 @@
-export type WeekdayData = {
+export type CityWeatherData = {
+  city: string;
+  weather: Weather;
+};
+
+export type Weather = {
+  current: {
+    temp: number;
+    sunrise: number;
+    sunset: number;
+    wind_deg: number;
+    wind_speed: number;
+    feels_like: number;
+    dt: number;
+    weather: {
+      0: { description: string; icon: string; id: number; main: string };
+    };
+  };
+  minutely?: { dt: number; precipitation: number }[];
+  hourly: Hourly[];
+  daily: Daily[];
+};
+
+export type Hourly = {
+  pop: number;
+  dt: number;
+};
+
+export type Daily = {
   humidity: number;
   sunrise: number;
   sunset: number;
@@ -16,29 +44,6 @@ export type WeekdayData = {
   rain?: number;
   wind_deg: number;
   wind_speed: number;
-};
-
-export type Weather = {
-  current: {
-    temp: number;
-    sunrise: number;
-    sunset: number;
-    wind_deg: number;
-    wind_speed: number;
-    feels_like: number;
-    dt: number;
-    weather: {
-      0: { description: string; icon: string; id: number; main: string };
-    };
-  };
-  minutely?: { dt: number; precipitation: number }[];
-  hourly: { pop: number; dt: number }[];
-  daily: WeekdayData[];
-};
-
-export type CityWeatherData = {
-  city: string;
-  weather: Weather;
 };
 
 export type Coords = {
@@ -66,7 +71,7 @@ export type Quote = {
 };
 
 export type ServerSideAssets = {
-  url?: string;
+  url: string;
   quote: Quote;
 };
 

@@ -1,8 +1,6 @@
-type WeekMap = {
+const currentDay: {
   [int: number]: string;
-};
-
-const currentDay: WeekMap = {
+} = {
   0: "Sunday",
   1: "Monday",
   2: "Tuesday",

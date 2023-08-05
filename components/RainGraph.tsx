@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import useTime from "../hooks/useTime";
-import { Weather } from "../Types";
+import { Hourly } from "../Types";
 import Image from "next/image";
 
-function RainGraph({ data: { hourly } }: { data: Weather }) {
+function RainGraph({ hourly }: { hourly: Hourly[] }) {
   useEffect(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -25,13 +24,13 @@ function RainGraph({ data: { hourly } }: { data: Weather }) {
     ctx.font = "35px Gill Sans";
     ctx.textAlign = "center";
 
-    hourly?.forEach(({ pop, dt }, i) => {
+    hourly.forEach(({ pop, dt }, i) => {
       const popScaled = pop * 200;
       if (i > 24) return;
       ctx.fillStyle = "hsla(200,100%,75%,0.5)";
       ctx.strokeStyle = "hsl(200,100%,75%)";
 
-      if (i > nextDayIndex) {
+      if (i > nextDayIndex!) {
         ctx.strokeStyle = "hsla(0,100%,100%,0)";
         ctx.fillStyle = "hsla(200,100%,75%,0.25)";
       }
@@ -49,10 +48,15 @@ function RainGraph({ data: { hourly } }: { data: Weather }) {
 
   return (
     <div className="w-10/12 mx-auto my-2">
-      <h1 className="text-xs text-start font-bold flex items-center bg-black/25 justify-center rounded-lg">
+      <h1 className="w-full text-xs text-start font-bold flex items-center bg-black/25 justify-between p-1 rounded-sm">
         24hr chance of
-        <Image src={"/rain.svg"} alt="snow" width={12} height={12}></Image>
-        <Image src={"/snow.svg"} alt="snow" width={12} height={12}></Image>
+        <Image src={"/rain-drop.svg"} alt="rain" width={15} height={15}></Image>
+        <Image
+          src={"/snow-flake.svg"}
+          alt="snow"
+          width={15}
+          height={15}
+        ></Image>
       </h1>
       <canvas id="canvas" className="w-full"></canvas>
     </div>

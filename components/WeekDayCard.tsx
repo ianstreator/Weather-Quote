@@ -1,48 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
-import { WeekdayData } from "../Types";
+import { Daily } from "../Types";
 import useGetDay from "../hooks/useGetDay";
 import useInches from "../hooks/useInches";
 import useTime from "../hooks/useTime";
 
-const iconSize = 100;
+const iconSize = 30;
 
-function WeekDayCard({ data }: { data: WeekdayData }) {
+function WeekDayCard({
+  dt,
+  rain,
+  snow,
+  sunrise,
+  sunset,
+  temp: { day, min, max },
+  weather: {
+    0: { description, icon },
+  },
+  pop,
+}: Daily) {
   const [cardFlipped, setCardFlipped] = useState<boolean>(false);
 
-  const weekDay = useGetDay(data.dt);
-  const rain = useInches(data.rain);
-  const snow = useInches(data.snow);
-
-  const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(data.sunrise);
-  const { timeString: setTime, timeAbbr: setAbbr } = useTime(data.sunset);
+  const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(sunrise);
+  const { timeString: setTime, timeAbbr: setAbbr } = useTime(sunset);
 
   const turnArrow = (
     <figure className="arrow">
       <Image
         src="/turn-arrow.svg"
         alt="weather-icon"
-        width={iconSize / 4}
-        height={iconSize / 4}
+        width={iconSize}
+        height={iconSize}
       />
     </figure>
   );
 
   const front = (
     <div className="card front">
-      <h1>{weekDay}</h1>
-      <h1>{`${Math.round(data.temp.day)}°`}</h1>
+      <h1>{useGetDay(dt)}</h1>
+      <h1>{`${Math.round(day)}°`}</h1>
 
       <figure className="">
         <Image
-          src={`/${data.weather[0].icon}.svg`}
+          src={`/${icon}.svg`}
           alt="weather-icon"
-          width={iconSize / 1.5}
-          height={iconSize / 1.5}
+          width={iconSize}
+          height={iconSize}
         />
       </figure>
-      <p>{data.weather[0].description}</p>
+      <p>{description}</p>
       {turnArrow}
     </div>
   );
@@ -52,47 +59,45 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
       <fieldset>
         <legend>Temperature</legend>
         <div className="w-11/12 flex justify-between items-center mx-auto">
-          <p>{`${Math.round(data.temp.max)}°`}</p>
+          <p>{`H: ${Math.round(max)}°`}</p>
           <Image
             src={"/temp-diff.svg"}
             alt="temp-diff"
-            width={iconSize / 3}
-            height={iconSize / 3}
+            width={iconSize}
+            height={iconSize}
           ></Image>
-          <p className="text-white/75">{`${Math.round(data.temp.min)}°`}</p>
+          <p className="opacity-60">{`L: ${Math.round(min)}°`}</p>
         </div>
       </fieldset>
 
       <fieldset>
         <legend>
           Precipitation{" "}
-          <span className="text-xs font-thin">
-            {(data.pop * 100).toFixed(0)}%
-          </span>
+          <span className="text-xs font-thin">{(pop * 100).toFixed(0)}%</span>
         </legend>
 
-        {rain && (
+        {rain && description.includes("rain") && (
           <div className="flex items-center m-auto ">
             <Image
-              src={"/rain.svg"}
+              src={"/rain-drop.svg"}
               alt="rain"
-              width={iconSize / 6}
-              height={iconSize / 6}
+              width={iconSize}
+              height={iconSize}
             ></Image>
 
-            <p>{rain}</p>
+            <p>{useInches(rain)}</p>
           </div>
         )}
-        {snow && (
+        {snow && description.includes("snow") && (
           <div className="flex items-center m-auto ">
             <Image
-              src={"/snow.svg"}
+              src={"/snow-flake.svg"}
               alt="snow"
-              width={iconSize / 6}
-              height={iconSize / 6}
+              width={iconSize}
+              height={iconSize}
             ></Image>
 
-            <p>{snow}</p>
+            <p>{useInches(snow)}</p>
           </div>
         )}
       </fieldset>
@@ -106,8 +111,8 @@ function WeekDayCard({ data }: { data: WeekdayData }) {
 
           <Image
             src={"/sun-rise-set.svg"}
-            width={iconSize / 2}
-            height={iconSize / 2}
+            width={iconSize * 1.5}
+            height={iconSize * 1.5}
             alt="sun-rise-set"
             className="mt-auto mx-auto"
           ></Image>

@@ -2,24 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.scrollbar {
-  padding-bottom: 1rem;
+.scrollbar-hide {
   &::-webkit-scrollbar {
-    height: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: hsla(0, 0%, 100%, 0.1);
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgb(255, 255, 255);
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: hsl(0, 0%, 100%);
+    display: none;
   }
 }
 
