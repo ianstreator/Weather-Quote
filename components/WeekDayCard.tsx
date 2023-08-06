@@ -25,6 +25,9 @@ function WeekDayCard({
   const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(sunrise);
   const { timeString: setTime, timeAbbr: setAbbr } = useTime(sunset);
 
+  const rainInches = useInches(rain)
+  const snowInches = useInches(snow)
+
   const turnArrow = (
     <figure className="arrow">
       <Image
@@ -85,7 +88,7 @@ function WeekDayCard({
               height={iconSize}
             ></Image>
 
-            <p>{useInches(rain)}</p>
+            <p>{rainInches}</p>
           </div>
         )}
         {snow && description.includes("snow") && (
@@ -97,7 +100,7 @@ function WeekDayCard({
               height={iconSize}
             ></Image>
 
-            <p>{useInches(snow)}</p>
+            <p>{snowInches}</p>
           </div>
         )}
       </fieldset>
