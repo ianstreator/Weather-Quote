@@ -1,23 +1,21 @@
 import React from "react";
 import Image from "next/image";
-import { CityWeatherData } from "../Types";
+import { CityWeatherData } from "../types";
 import RainGraph from "./RainGraph";
-import useTime from "../hooks/useTime";
-import useGetDay from "../hooks/useGetDay";
-
-const svgSize = 100;
+import epochTo12HourTime from "../utils/epochTo12HourTime";
+import epochToDayOfWeek from "../utils/epochToDayOfWeek";
+import { BASE_ICON_SIZE } from "../utils/constants";
 
 function CurrentDayCard({
   city,
   weather: {
     current: {
-      dt,
+      dt: timeEpoch,
       sunrise,
       sunset,
-      temp,
-      feels_like,
+      temp: avgTemp,
       weather: {
-        0: { icon, description },
+        0: { description: weatherDescription, icon: weatherIcon },
       },
     },
     hourly,
@@ -28,61 +26,62 @@ function CurrentDayCard({
     },
   },
 }: CityWeatherData) {
-  const { timeString: riseTime, timeAbbr: riseAbbr } = useTime(sunrise);
-  const { timeString: setTime, timeAbbr: setAbbr } = useTime(sunset);
+  const { timeString: riseTime, timeAbbr: riseAbbr } =
+    epochTo12HourTime(sunrise);
+  const { timeString: setTime, timeAbbr: setAbbr } = epochTo12HourTime(sunset);
 
   return (
-    <div className="card max-w-xs w-10/12 max-h-80 rounded-lg bg-black/50 backdrop-blur-sm text-center  text-white mx-auto p-2 flex flex-row content-center md:mx-0 md:max-w-lg">
-      <div className="w-1/2 flex flex-col justify-between">
-        <h2 className="text-center text-2xl font-bold">{city}</h2>
-        <div className="flex-col items-center w-full bg-black/0 bg-opacity-25 p-0">
-          <div className="w-10/12 flex flex-row justify-between text-sm mx-auto">
-            <p>H: {`${Math.round(max)}°`}</p>
-            <p className="opacity-70">L: {`${Math.round(min)}°`}</p>
-          </div>
-          <RainGraph hourly={hourly} />
-          <div className="relative w-10/12 flex flex-row justify-between text-sm mx-auto">
-            <div className="absolute top-0 left-0 text-start text-xs">
-              <p> {riseTime + " " + riseAbbr}</p>
-              <p> Rise</p>
-            </div>
+    <div className="max-w-xs h-fit rounded-sm bg-black/50 backdrop-blur-sm text-center  text-white mx-auto p-2 flex flex-col content-center md:mx-0 md:max-w-lg">
+      <h2 className="text-xl font-bold pb-2">{city}'s weather</h2>
 
-            <Image
-              src={"/sun-rise-set.svg"}
-              width={svgSize * 0.75}
-              height={svgSize * 0.75}
-              alt="sun-rise-set"
-              className="mt-auto mx-auto"
-            ></Image>
-
-            <div className="absolute bottom-0 right-0 text-end text-xs">
-              <p> Set</p>
-              <p> {setTime + " " + setAbbr}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="w-1/2 flex flex-col justify-around bg-black/25">
-        <p className="text-2xl font-bold">{useGetDay(dt)}</p>
-        <div className="flex-col mx-auto">
+      <div className="flex flex-row">
+        <div className="w-1/2 flex flex-col justify-around items-center bg-black/30 rounded-lg p-2">
+          <p className="text-xl">{epochToDayOfWeek(timeEpoch)}</p>
           <div className="flex justify-center">
-            <p className="text-4xl">{Math.round(temp)}</p>
-            <p className="text-xl">℉</p>
+            <p className="text-xl">{Math.round(avgTemp)}°</p>
           </div>
 
-          <p className="text-xs">( Feels like {Math.round(feels_like)} )</p>
+          <figure>
+            <Image
+              src={`/${weatherIcon}.svg`}
+              alt="icon"
+              width={BASE_ICON_SIZE * 7}
+              height={BASE_ICON_SIZE * 7}
+            ></Image>
+          </figure>
+          <p className="w-full px-2 text-center mx-auto">
+            {weatherDescription}
+          </p>
         </div>
-
-        <figure>
-          <Image
-            src={`/${icon}.svg`}
-            alt="icon"
-            width={svgSize}
-            height={svgSize}
-          ></Image>
-        </figure>
-        <p className="w-full px-2 text-center mx-auto">{description}</p>
+        <div className="w-1/2 flex flex-col justify-between p-2">
+          <div className="flex-col items-center w-full bg-black/0 bg-opacity-25 p-0">
+            <div className="w-full flex flex-row justify-between mx-auto">
+              <Image
+                src={"/temp-diff.svg"}
+                width={BASE_ICON_SIZE * 4}
+                height={BASE_ICON_SIZE * 4}
+                alt="temp"
+              ></Image>
+              <div className="flex flex-col">
+                <p>H: {`${Math.round(max)}°`}</p>
+                <p className="opacity-70">L: {`${Math.round(min)}°`}</p>
+              </div>
+            </div>
+            <RainGraph hourly={hourly} />
+            <div className="w-full flex flex-row justify-between items-center">
+              <Image
+                src={"/sun-rise-set.svg"}
+                width={BASE_ICON_SIZE * 4}
+                height={BASE_ICON_SIZE * 4}
+                alt="sun-rise-set"
+              ></Image>
+              <div className="flex flex-col">
+                <p> {riseTime + " " + riseAbbr}</p>
+                <p> {setTime + " " + setAbbr}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
