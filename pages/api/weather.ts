@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Coords, Weather, CityWeatherData, Error } from "../../Types";
+import { Coords, Weather, CityWeatherData, Error } from "../../types";
 import { Redis } from "@upstash/redis";
 
 const redis = Redis.fromEnv();

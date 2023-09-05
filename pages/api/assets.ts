@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Redis } from "@upstash/redis";
-import { ServerSideAssets, Quote, Error, URLs } from "../../Types";
+import { ServerSideAssets, Quote, Error, URLs } from "../../types";
 const redis = Redis.fromEnv();
 
 export default async function handler(
@@ -11,7 +11,10 @@ export default async function handler(
   try {
     const randBackground = (await redis.srandmember("urls")) as URLs;
     const url = randBackground[1].full;
-    const quote = (await redis.srandmember("quotes")) as Quote;
+    let quote = (await redis.srandmember("quotes")) as Quote;
+    while (quote.quote.length > 66) {
+      quote = (await redis.srandmember("quotes")) as Quote;
+    }
 
     res.status(200).json({ url, quote });
   } catch (error) {
