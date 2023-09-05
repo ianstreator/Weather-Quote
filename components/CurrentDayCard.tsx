@@ -32,7 +32,7 @@ function CurrentDayCard({
 
   return (
     <div className="max-w-xs h-fit rounded-sm bg-black/50 backdrop-blur-sm text-center  text-white mx-auto p-2 flex flex-col content-center md:mx-0 md:max-w-lg">
-      <h2 className="text-xl font-bold pb-2">{city}'s weather</h2>
+      <h2 className="text-xl font-bold pb-2">{`${city}'s weather`}</h2>
 
       <div className="flex flex-row">
         <div className="w-1/2 flex flex-col justify-around items-center bg-black/30 rounded-lg p-2">
