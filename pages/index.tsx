@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Weather, CityWeatherData, Coords, ServerSideAssets } from "../Types";
+import { CityWeatherData, Coords, ServerSideAssets } from "../types";
 import { nextConfig } from "../next.config";
-import Image from "next/image";
 const { environment } = nextConfig;
 
 import CurrentDayCard from "../components/CurrentDayCard";
 import WeekDayCard from "../components/WeekDayCard";
 
-export default function Home({ url, quote:{quote,author} }: ServerSideAssets) {
+export default function Home({
+  url,
+  quote: { quote, author },
+}: ServerSideAssets) {
   const [cityWeatherData, setCityWeatherData] = useState<CityWeatherData>();
   useEffect(() => {
     (async () => {
@@ -33,43 +35,21 @@ export default function Home({ url, quote:{quote,author} }: ServerSideAssets) {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-      className="w-screen h-screen"
+      className="w-screen h-screen flex flex-col md:p-10"
     >
-      <div className="w-screen h-screen mx-auto flex flex-col md:pt-20 md:px-20 md:w-10/12 md:scale-125">
-        <div className="flex flex-col md:flex-row-reverse md:w-full md:justify-between">
-          <div className="w-screen max-h-72 text-white py-4 flex flex-row justify-center bg-gradient-to-b from-zinc-900 md:w-max md:ml-6 md:h-fit md:bg-gradient-to-tl md:from-zinc-800/50 md:to-zinc-800 md:rounded-lg">
-            <div className="w-10/12 max-w-xs px-4 md:px-0">
-              <p className="text-md text-start">{quote}</p>
-              <p className="text-end pt-2">-{author}</p>
-            </div>
+      <div className="flex flex-col justify-start mb-2 md:pb-0 md:flex-row-reverse md:w-full md:justify-between">
+        <div className="w-full py-4 flex flex-col bg-gradient-to-b from-zinc-900 md:w-max md:ml-6 md:h-fit md:bg-gradient-to-tl md:from-zinc-800/50 md:to-zinc-800 md:rounded-sm md:px-4">
+          <div className="max-w-xs w-full mx-auto px-2">
+            <p className="text-md text-start">{quote}</p>
+            <p className="text-end pt-2">-{author}</p>
           </div>
-          <CurrentDayCard {...cityWeatherData} />
         </div>
-        <div className="scrollbar-hide overflow-x-scroll flex max-w-xs mx-auto mt-4 md:mt-8 space-x-8 p-0 bg-transparent md:max-w-full md:w-full md:justify-between">
-          {cityWeatherData.weather.daily.map((day, i) => {
-            return <WeekDayCard key={i} {...day} />;
-          })}
-        </div>
-        <div className="footer-container max-w-xs mx-auto md:max-w-full md:justify-start md:items-start md:pl-0">
-      <a className="footer-card md:m-1" href="https://github.com/ianstreator" target="_blank" rel="noreferrer">
-        <Image
-          src={"/github-icon.svg"}
-          width={25}
-          height={25}
-          alt="github"
-        ></Image>
-        &nbsp; ianstreator
-      </a>
-      <a className="footer-card md:m-1"  href="https://openweathermap.org" target="_blank" rel="noreferrer">
-        <Image
-          src={"/openweather-icon.svg"}
-          width={25}
-          height={25}
-          alt="github"
-        ></Image>
-        &nbsp; OpenWeather
-      </a>
-    </div>
+        <CurrentDayCard {...cityWeatherData} />
+      </div>
+      <div className="max-w-xs h-fit mx-auto relative flex flex-row overflow-hidden overflow-x-scroll md:mt-auto md:max-w-full lg:mx-0 lg:justify-between">
+        {cityWeatherData.weather.daily.map((day, i) => {
+          return <WeekDayCard key={i} {...day} />;
+        })}
       </div>
     </main>
   );
