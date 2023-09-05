@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Hourly } from "../Types";
-import Image from "next/image";
+import { Hourly } from "../types";
 
 function RainGraph({ hourly }: { hourly: Hourly[] }) {
   useEffect(() => {
@@ -47,18 +46,11 @@ function RainGraph({ hourly }: { hourly: Hourly[] }) {
   }, [hourly]);
 
   return (
-    <div className="w-10/12 mx-auto my-2">
-      <h1 className="w-full text-xs text-start font-bold flex items-center bg-black/25 justify-between p-1 rounded-sm">
-        24hr chance of
-        <Image src={"/rain-drop.svg"} alt="rain" width={15} height={15}></Image>
-        <Image
-          src={"/snow-flake.svg"}
-          alt="snow"
-          width={15}
-          height={15}
-        ></Image>
+    <div className="w-full mx-auto my-2 ">
+      <h1 className="w-full text-start flex items-center justify-between p-1 mb-1 bg-black/25 rounded-sm">
+        Hourly precip. %
       </h1>
-      <canvas id="canvas" className="w-full"></canvas>
+      <canvas id="canvas" className="max-w-full"></canvas>
     </div>
   );
 }
