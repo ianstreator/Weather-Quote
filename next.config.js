@@ -2,7 +2,7 @@
 const isDev =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:3000/"
-    : "https://next-weather-quote.vercel.app/";
+    : "https://geocast.vercel.app/";
 
 module.exports = {
   nextConfig: {
