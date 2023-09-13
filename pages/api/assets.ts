@@ -12,9 +12,9 @@ export default async function handler(
     const randBackground = (await redis.srandmember("urls")) as URLs;
     const url = randBackground[1].full;
     let quote = (await redis.srandmember("quotes")) as Quote;
-    while (quote.quote.length > 66) {
-      quote = (await redis.srandmember("quotes")) as Quote;
-    }
+    // while (quote.quote.length > 66) {
+    //   quote = (await redis.srandmember("quotes")) as Quote;
+    // }
 
     res.status(200).json({ url, quote });
   } catch (error) {
