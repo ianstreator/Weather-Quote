@@ -25,7 +25,7 @@ export default async function handler(
     return city;
   };
 
-  const getCurrentWeather = async () => {
+  const getOpenWeatherData = async () => {
     const res = await fetch(
       `${WEATHER_API_BASE_URL}data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=imperial`
     );
@@ -40,7 +40,7 @@ export default async function handler(
     res.status(200).send({ city, weather });
   } else {
     try {
-      const weatherData = await getCurrentWeather();
+      const weatherData = await getOpenWeatherData();
       weather = {
         current: weatherData.current,
         hourly: weatherData.hourly.splice(0, 23),
