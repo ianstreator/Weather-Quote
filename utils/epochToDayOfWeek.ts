@@ -10,8 +10,8 @@ const weekDays: {
   6: "Saturday",
 };
 
-function epochToDayOfWeek(int: number) {
-  const dayNum = new Date(int * 1000).getDay();
+function epochToDayOfWeek(epoch: number) {
+  const dayNum = new Date(epoch * 1000).getDay();
   const weekDay = weekDays[dayNum];
   return weekDay;
 }
