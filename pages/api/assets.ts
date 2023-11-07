@@ -9,13 +9,12 @@ export default async function handler(
   res: NextApiResponse<ServerSideAssets | Error>
 ) {
   try {
-    
-    const getRedisURLs =  () => (await redis.srandmember("urls")) as URLs;
-    const getRedisQuote = () => (await redis.srandmember("quotes")) as Quote;
+    const getRedisURLs = async () => (await redis.srandmember("urls")) as URLs;
+    const getRedisQuote = async () =>
+      (await redis.srandmember("quotes")) as Quote;
 
-    const [ photo,quote ] Promise.all([getRedisURLs(), getRedisQuote()])
-
-    res.status(200).json({ url:photo[1].full, quote });
+    const [photo, quote] = await Promise.all([getRedisURLs(), getRedisQuote()]);
+    res.status(200).json({ url: photo[1].full, quote });
   } catch (error) {
     res.status(500).json({ message: error });
   }

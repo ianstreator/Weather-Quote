@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CityWeatherData, Coords, ServerSideAssets } from "../types";
 import { nextConfig } from "../next.config";
+import Image from "next/image";
 const { environment } = nextConfig;
 
 import CurrentDayCard from "../components/CurrentDayCard";
@@ -28,15 +29,14 @@ export default function Home({
     );
 
   return (
-    <main
-      style={{
-        backgroundImage: `url(${url})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-      className="w-screen h-screen flex flex-col md:p-10"
-    >
+    <main className="w-screen h-screen flex flex-col md:p-10">
+      <Image
+        src={url}
+        alt="background"
+        fill
+        priority={true}
+        className="absolute z-[-1] object-cover	"
+      ></Image>
       <div className="flex flex-col justify-start mb-2 md:pb-0 md:flex-row-reverse md:w-full md:justify-between">
         <div className="w-full py-4 flex flex-col bg-gradient-to-b from-zinc-900 md:w-max md:ml-6 md:h-fit md:bg-gradient-to-tl md:from-zinc-800/50 md:to-zinc-800 md:rounded-sm md:px-4">
           <div className="max-w-xs w-full mx-auto px-2">
