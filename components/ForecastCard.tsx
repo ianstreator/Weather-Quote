@@ -5,7 +5,7 @@ import { Daily } from "../types";
 import FrontWeatherCard from "./FrontWeatherCard";
 import BackWeatherCard from "./BackWeatherCard";
 
-function WeekDayCard({
+function ForecastCard({
   dt: timeEpoch,
   rain,
   snow,
@@ -41,4 +41,4 @@ function WeekDayCard({
   );
 }
 
-export default WeekDayCard;
+export default ForecastCard;

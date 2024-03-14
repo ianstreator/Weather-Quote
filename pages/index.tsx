@@ -5,7 +5,7 @@ import Image from "next/image";
 const { environment } = nextConfig;
 
 import CurrentDayCard from "../components/CurrentDayCard";
-import WeekDayCard from "../components/WeekDayCard";
+import ForecastCard from "../components/ForecastCard";
 
 export default function Home({
   url,
@@ -48,7 +48,7 @@ export default function Home({
       </div>
       <div className="max-w-xs h-fit mx-auto relative flex flex-row overflow-hidden overflow-x-scroll md:mt-auto md:max-w-full lg:mx-0 lg:justify-between">
         {cityWeatherData.weather.daily.map((day, i) => {
-          return <WeekDayCard key={i} {...day} />;
+          return <ForecastCard key={i} {...day} />;
         })}
       </div>
     </main>
