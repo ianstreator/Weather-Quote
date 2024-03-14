@@ -35,7 +35,7 @@ function BackWeatherCard({
     snow && millimetersToInches(snow).toFixed(2).replace("0.", ".") + '"';
 
   return (
-    <div className="back absolute bg-black/40 backdrop-blur-sm rounded-lg p-2 flex flex-col items-start justify-between w-36 h-60">
+    <div className="back absolute bg-black/40 rounded-lg p-2 flex flex-col items-center justify-between w-36 h-60">
       <fieldset className="w-full border border-t border-x-0 border-b-0">
         <legend className="pr-1 font-semibold">Temperature</legend>
         <div className="w-full flex justify-between items-center mx-auto">
@@ -73,7 +73,7 @@ function BackWeatherCard({
           </div>
         )}
         {snow && weatherDescription.includes("snow") && (
-          <div className="flex items-center m-auto ">
+          <div className="w-full flex items-center justify-between">
             <Image
               src={"/snow.svg"}
               alt="snow"

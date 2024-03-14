@@ -18,7 +18,7 @@ function FrontWeatherCard({
   avgTemp,
 }: FrontCardData) {
   return (
-    <div className="front absolute bg-black/40 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center justify-between w-36 h-60">
+    <div className="front absolute bg-black/40 rounded-lg p-2 flex flex-col items-center justify-between w-36 h-60">
       <h1 className="text-xl">{epochToDayOfWeek(timeEpoch)}</h1>
       <h1 className="text-xl">{Math.round(avgTemp)}°</h1>
 

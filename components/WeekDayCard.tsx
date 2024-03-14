@@ -33,7 +33,7 @@ function WeekDayCard({
   return (
     <div
       onClick={() => setCardFlipped(!cardFlipped)}
-      className={clsx("custom-card w-36 h-60 relative ml-8 first:ml-0", cardFlipped && "flipped")}
+      className={clsx("custom-card cursor-pointer rounded-lg w-36 h-60 relative ml-8 first:ml-0 backdrop-blur-sm", cardFlipped && "flipped")}
     >
       <FrontWeatherCard {...frontCardData} />
       <BackWeatherCard {...backCardData} />
