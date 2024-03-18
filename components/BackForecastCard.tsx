@@ -15,7 +15,7 @@ type BackCardData = {
   sunset: number;
 };
 
-function BackWeatherCard({
+function BackForecastCard({
   minTemp,
   maxTemp,
   rain,
@@ -42,8 +42,8 @@ function BackWeatherCard({
           <Image
             src={"/temp-diff.svg"}
             alt="temp-diff"
-            width={BASE_ICON_SIZE * 4}
-            height={BASE_ICON_SIZE * 4}
+            width={BASE_ICON_SIZE * 3}
+            height={BASE_ICON_SIZE * 3}
           ></Image>
           <div className="flex flex-col h-full justify-between">
             <p>{`H: ${Math.round(maxTemp)}°`}</p>
@@ -52,7 +52,7 @@ function BackWeatherCard({
         </div>
       </fieldset>
 
-      <fieldset className="w-full h-full border border-t border-x-0 border-b-0">
+      <fieldset className="w-full h-full flex border border-t border-x-0 border-b-0">
         <legend className="pr-1 font-semibold">
           Precip.{" "}
           <span className="font-thin">
@@ -65,8 +65,8 @@ function BackWeatherCard({
             <Image
               src={"/rain.svg"}
               alt="rain"
-              width={BASE_ICON_SIZE * 4}
-              height={BASE_ICON_SIZE * 4}
+              width={BASE_ICON_SIZE * 3}
+              height={BASE_ICON_SIZE * 3}
             ></Image>
 
             <p>{rainInches}</p>
@@ -77,8 +77,8 @@ function BackWeatherCard({
             <Image
               src={"/snow.svg"}
               alt="snow"
-              width={BASE_ICON_SIZE * 4}
-              height={BASE_ICON_SIZE * 4}
+              width={BASE_ICON_SIZE * 3}
+              height={BASE_ICON_SIZE * 3}
             ></Image>
 
             <p>{snowInches}</p>
@@ -92,8 +92,8 @@ function BackWeatherCard({
         <div className="relative w-full flex justify-between items-center mx-auto">
           <Image
             src={"/sun-rise-set.svg"}
-            width={BASE_ICON_SIZE * 4}
-            height={BASE_ICON_SIZE * 4}
+            width={BASE_ICON_SIZE * 3}
+            height={BASE_ICON_SIZE * 3}
             alt="sun"
           ></Image>
 
@@ -112,4 +112,4 @@ function BackWeatherCard({
   );
 }
 
-export default BackWeatherCard;
+export default BackForecastCard;

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { Daily } from "../types";
 
-import FrontWeatherCard from "./FrontWeatherCard";
-import BackWeatherCard from "./BackWeatherCard";
+import FrontForecastCard from "./FrontForecastCard";
+import BackForecastCard from "./BackForecastCard";
 
 function ForecastCard({
   dt: timeEpoch,
@@ -35,8 +35,8 @@ function ForecastCard({
       onClick={() => setCardFlipped(!cardFlipped)}
       className={clsx("custom-card cursor-pointer rounded-lg w-36 h-60 relative ml-8 first:ml-0 backdrop-blur-sm", cardFlipped && "flipped")}
     >
-      <FrontWeatherCard {...frontCardData} />
-      <BackWeatherCard {...backCardData} />
+      <FrontForecastCard {...frontCardData} />
+      <BackForecastCard {...backCardData} />
     </div>
   );
 }

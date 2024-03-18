@@ -11,7 +11,7 @@ type FrontCardData = {
   avgTemp: number;
 };
 
-function FrontWeatherCard({
+function FrontForecastCard({
   timeEpoch,
   weatherDescription,
   weatherIcon,
@@ -30,7 +30,7 @@ function FrontWeatherCard({
           height={BASE_ICON_SIZE * 6}
         />
       </figure>
-      <p className="mb-4">{weatherDescription}</p>
+      <p className="mb-4 text-center">{weatherDescription}</p>
       <IoIosReturnRight
         className="absolute bottom-0 right-0 mr-2 mb-1"
         size={BASE_ICON_SIZE * 2}
@@ -39,4 +39,4 @@ function FrontWeatherCard({
   );
 }
 
-export default FrontWeatherCard;
+export default FrontForecastCard;
